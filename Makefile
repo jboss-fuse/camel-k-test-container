@@ -1,4 +1,4 @@
-REPOSITORY	?= quay.io/jbouska
+REPOSITORY	?= quay.io/rh_integration
 TAG ?= latest
 CONTAINER_NAME = camel-k-test-container
 
