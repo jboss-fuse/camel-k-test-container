@@ -12,8 +12,7 @@ fail() {
 
 download_cli() {
   echo "Downloading KAMEL_CLI from ${KAMEL_URL}"
-  curl -s -O ${KAMEL_URL}
-  tar xzf ${KAMEL_URL##*/}
+  curl -L -s -o kamel_cli.tar.gz -O ${KAMEL_URL} && tar xzf kamel_cli.tar.gz || fail "Can't download KAMEL_CLI"
   export KAMEL_BIN=${PWD}/kamel
 }
 
