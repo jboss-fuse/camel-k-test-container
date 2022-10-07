@@ -1,6 +1,13 @@
 #!/bin/bash
 set -o pipefail
 
+OLM_CHANNEL=${OLM_CHANNEL:-latest}
+
+if [[ -z "${VERSION}" ]]; then
+  echo "ENV variable is not found - extract it from the cluster (from the $OLM_CHANNEL channel)"
+  VERSION=$(oc get packagemanifests red-hat-camel-k -o jsonpath="{.status.channels[?(@.name=='${OLM_CHANNEL}')].currentCSVDesc.version}")
+fi
+
 KAMEL_URL=https://mirror.openshift.com/pub/openshift-v4/clients/camel-k/${VERSION}/camel-k-client-${VERSION}-linux-64bit.tar.gz
 REPO=https://github.com/apache/camel-k.git
 RESULTS_DIR="${TEST_COLLECT_BASE_DIR:=/data/results}"
