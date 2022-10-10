@@ -11,6 +11,8 @@ fi
 KAMEL_URL=https://mirror.openshift.com/pub/openshift-v4/clients/camel-k/${VERSION}/camel-k-client-${VERSION}-linux-64bit.tar.gz
 REPO=https://github.com/apache/camel-k.git
 RESULTS_DIR="${TEST_COLLECT_BASE_DIR:=/data/results}"
+GOCACHE=off
+
 
 fail() {
   echo "$@" 1>&2
