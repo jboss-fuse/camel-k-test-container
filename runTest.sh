@@ -11,7 +11,7 @@ fi
 KAMEL_URL=https://mirror.openshift.com/pub/openshift-v4/clients/camel-k/${VERSION}/camel-k-client-${VERSION}-linux-64bit.tar.gz
 REPO=https://github.com/apache/camel-k.git
 RESULTS_DIR="${TEST_COLLECT_BASE_DIR:=/data/results}"
-GOCACHE=off
+GOCACHE=/go/.cache
 
 
 fail() {
@@ -47,7 +47,6 @@ export CAMEL_K_TEST_TIMEOUT_LONG=20m
 
 clone_testsuite
 download_cli
-go install github.com/jstemmer/go-junit-report@latest
 
 cd camel-k
 run_test common ./e2e/common/rest_test.go
