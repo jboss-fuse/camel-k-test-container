@@ -2,9 +2,10 @@
 set -o pipefail
 
 OLM_CHANNEL=${OLM_CHANNEL:-latest}
+export CAMEL_K_GLOBAL_OPERATOR_NS=${OPERATOR_NS:-'openshift-operators'}
 
 if [[ -z "${VERSION}" ]]; then
-  echo "ENV variable is not found - extract it from the cluster (from the $OLM_CHANNEL channel)"
+  echo "'VERSION' ENV variable is not found - extract it from the cluster (from the '$OLM_CHANNEL' channel)"
   VERSION=$(oc get packagemanifests red-hat-camel-k -o jsonpath="{.status.channels[?(@.name=='${OLM_CHANNEL}')].currentCSVDesc.version}")
 fi
 
@@ -44,10 +45,11 @@ export KAMEL_INSTALL_BUILD_TIMEOUT=15m
 export CAMEL_K_TEST_TIMEOUT_SHORT=5m
 export CAMEL_K_TEST_TIMEOUT_MEDIUM=15m
 export CAMEL_K_TEST_TIMEOUT_LONG=20m
+export CAMEL_K_FORCE_GLOBAL_TEST=true
 
 clone_testsuite
 download_cli
 
 cd camel-k
-run_test common ./e2e/common/rest_test.go
-run_test traits ./e2e/common/traits/route_test.go ./e2e/common/traits/prometheus_test.go
+run_test common ./e2e/global/common/rest_test.go
+run_test traits ./e2e/global/common/traits/route_test.go ./e2e/global/common/traits/prometheus_test.go
