@@ -7,6 +7,8 @@ export CAMEL_K_GLOBAL_OPERATOR_NS=${OPERATOR_NS:-'openshift-operators'}
 if [[ -z "${VERSION}" ]]; then
   echo "'VERSION' ENV variable is not found - extract it from the cluster (from the '$OLM_CHANNEL' channel)"
   VERSION=$(oc get packagemanifests red-hat-camel-k -o jsonpath="{.status.channels[?(@.name=='${OLM_CHANNEL}')].currentCSVDesc.version}")
+  # get rid of the build suffix for operator respins
+  VERSION=${VERSION%+?*}
 fi
 
 KAMEL_URL=https://mirror.openshift.com/pub/openshift-v4/clients/camel-k/${VERSION}/camel-k-client-${VERSION}-linux-64bit.tar.gz
